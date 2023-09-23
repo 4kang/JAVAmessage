@@ -13,6 +13,11 @@ public class SchooController {
 	@Autowired
 	private HttpSession session;
 	
+	/*
+	 * トップページのリクエスト
+	 * @return input.htmlのパス
+	 */
+	
 	@GetMaping("/")
 	public String request() {
 		return "input";
@@ -20,8 +25,18 @@ public class SchooController {
 	
 	@PostMapping("input")
 	public String input(@RequestParam("message") String message) {
+		String sessionMessage = (String)session.getAttribute("sessionMessage");
+		System.out.println("----- メッセージ（追加前） -----");
+		System.out.println(sessionMessage);
 		
 		
+		sessionMessage = sessionMessage + " " + message;
+		session.setAttribute("sessionMessage", sessionMessage);
+		
+		System.out.println("----- メッセージ（追加後）-----");
+		System.out.println(sessionMessage);
+		
+		return "finish";
 	}
 	
 
